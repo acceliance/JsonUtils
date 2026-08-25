@@ -1,5 +1,14 @@
 # Json Utils
 
+[![Java 11](https://img.shields.io/badge/Java-11-007396?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Maven](https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+[![Jackson](https://img.shields.io/badge/Jackson-JSON%20databind-000000)](https://github.com/FasterXML/jackson)
+[![JSON Schema](https://img.shields.io/badge/JSON%20Schema-Draft%202020--12-blue)](https://json-schema.org/draft/2020-12/release-notes)
+
+[![Licence](https://img.shields.io/badge/licence-Apache%202.0-green)](LICENSE)
+[![Vendor](https://img.shields.io/badge/vendor-Acceliance-orange)](https://acceliance.fr)
+[![Last commit](https://img.shields.io/github/last-commit/acceliance/JsonUtils)](https://github.com/acceliance/JsonUtils/commits/main)
+
 Lightweight Jackson-based helpers for reading, writing, and describing Java objects as JSON —
 including JSON Schema generation tuned for consumption by AI models (LLM structured
 output / function-calling / tool-use schemas).
@@ -78,6 +87,22 @@ Built on:
   Jackson module, for schema generation
 - [json-schema-validator](https://github.com/java-json-tools/json-schema-validator) for schema
   validation support
+
+## Releasing
+
+Releases are published to Maven Central via the [Sonatype Central Portal](https://central.sonatype.com/).
+Everyday builds (`mvn install`) never touch signing or publishing — that's all scoped to a
+dedicated `release` Maven profile.
+
+```powershell
+./scripts/publish-to-central.ps1
+```
+
+The script runs pre-flight checks (GPG key present, `~/.m2/settings.xml` has Central
+credentials, version isn't a `SNAPSHOT`) then `mvn clean deploy -Prelease`, which builds,
+signs, and uploads a staging bundle. Publishing the bundle itself is a manual step you take at
+[central.sonatype.com/publishing/deployments](https://central.sonatype.com/publishing/deployments)
+after reviewing it.
 
 ## License
 
