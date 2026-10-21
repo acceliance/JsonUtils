@@ -41,7 +41,7 @@ Draft 2020-12 schemas designed to stay compact and unambiguous for that use case
 <dependency>
     <groupId>fr.acceliance</groupId>
     <artifactId>jsonutils</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -76,6 +76,25 @@ String schema = JsonSchemaGen.generateSchema(MyType.class);
 
 Returns a pretty-printed Draft 2020-12 JSON Schema string for `MyType`, suitable for handing
 directly to an LLM as a structured-output / tool-call schema.
+
+### Build a JSON Schema at runtime (no Java class)
+
+When the types only exist at runtime (for example in a UML model), `JsonSchemaBuilder`
+produces a schema with the same conventions as `JsonSchemaGen`: one `$defs` entry per
+type, `additionalProperties: false`, and `oneOf [key, $ref]` for references by identity key.
+
+```java
+import fr.acceliance.jsonutils.serialization.JsonSchemaBuilder;
+
+JsonSchemaBuilder b = new JsonSchemaBuilder().title("Orders");
+b.defineEnum("Status", List.of("OPEN", "CLOSED"), null);
+b.defineObject("Order")
+    .property("number", b.string(), true)
+    .property("status", b.ref("Status"), false)
+    .property("customer", b.identityReference(b.string(), b.ref("Customer"), "Customer"), true)
+    .property("lines", b.array(b.ref("OrderLine"), 1, null), true);
+String schema = b.rootArray("Order", null, null).toJson(); // or rootObject("Order")
+```
 
 ## Dependencies
 
