@@ -19,7 +19,7 @@
     Skip the pre-flight checks and go straight to `mvn clean deploy -Prelease`.
 
 .EXAMPLE
-    ./scripts/publish-to-central.ps1
+    ./publish-to-central.ps1
 #>
 
 [CmdletBinding()]
@@ -28,7 +28,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$repoRoot = $PSScriptRoot
 Set-Location $repoRoot
 
 function Write-Step($msg) { Write-Host "==> $msg" -ForegroundColor Cyan }

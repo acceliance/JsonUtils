@@ -114,7 +114,7 @@ Everyday builds (`mvn install`) never touch signing or publishing — that's all
 dedicated `release` Maven profile.
 
 ```powershell
-./scripts/publish-to-central.ps1
+./publish-to-central.ps1
 ```
 
 The script runs pre-flight checks (GPG key present, `~/.m2/settings.xml` has Central
